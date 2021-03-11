@@ -21,9 +21,9 @@ export function TaskList() {
       title: newTaskTitle,
       isComplete: false
     }
-    if (newTaskTitle !== '') {
-      setTasks(tasks => [...tasks, newTask])
-    }
+    if (!newTaskTitle) return
+    setTasks(tasks => [...tasks, newTask])
+    setNewTaskTitle('')
   }
 
   function handleToggleTaskCompletion(id: number) {
@@ -36,15 +36,24 @@ export function TaskList() {
     }
 
     setTasks(ToggledTasksArray)
+
+    // Outra alternativa:
+    // const newTasks = tasks.map(task => task.id === id ? { ...task, isComplete: !task.isComplete} : task)
+    // setTasks(newTasks)
   }
 
   function handleRemoveTask(id: number) {
     // Remova uma task da listagem pelo ID
+
     const removedTaskIndex = tasks.findIndex(task => task.id === id)
     let remainedTasksArray = [...tasks]
     remainedTasksArray.splice(removedTaskIndex, 1)
 
     setTasks(remainedTasksArray)
+
+    // Outra alternativa:
+    // const filteredTasks = tasks.filter(task => task.id !== id)
+    // setTasks(filteredTasks)
   }
 
   return (
